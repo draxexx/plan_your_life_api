@@ -8,6 +8,17 @@ const TaskSchema = new Schema({
     type: String, // type of the variable
     required: [true, "Please provide a title"], // this variable must be filled
   },
+  label: {
+    type: mongoose.Schema.ObjectId,
+    required: true,
+    ref: "Label", // give reference to the user model
+  },
+  subtasks: [
+    {
+      type: mongoose.Schema.ObjectId,
+      ref: "Subtask",
+    },
+  ],
   priority: {
     type: Number,
     required: [true, "Please provide a priority"],
