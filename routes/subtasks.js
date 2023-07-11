@@ -1,9 +1,9 @@
 const express = require("express");
 const router = express.Router();
 
-const { create, getAll } = require("../controllers/subtask");
+const { createHandler, getAll } = require("../controllers/subtask");
 
 router.get("/", getAll);
-router.post("/", create);
+router.post("/", createHandler);
 
 module.exports = router;

@@ -1,8 +1,8 @@
 const express = require("express");
 const router = express.Router();
 
-const { create } = require("../controllers/label");
+const { createHandler } = require("../controllers/label");
 
-router.post("/", create);
+router.post("/", createHandler);
 
 module.exports = router;

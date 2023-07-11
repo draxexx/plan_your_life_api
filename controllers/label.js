@@ -1,6 +1,6 @@
 const Label = require("../models/label");
 
-const create = async (req, res, next) => {
+const createHandler = async (req, res, next) => {
   // get body
   const body = req.body;
 
@@ -9,12 +9,12 @@ const create = async (req, res, next) => {
     ...body,
   });
 
-  res.status(200).json({
+  res.status(201).json({
     success: true,
     data: label,
   });
 };
 
 module.exports = {
-  create,
+  createHandler,
 };
