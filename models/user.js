@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const bcrypt = require("bcryptjs");
 
 const Schema = mongoose.Schema;
 
@@ -32,6 +33,26 @@ const UserSchema = new Schema({
       ref: "Task",
     },
   ],
+});
+
+UserSchema.pre("save", function (next) {
+  // if password doesn't update
+  if (!this.isModified("password")) {
+    next();
+  }
+
+  bcrypt.genSalt(10, (err, salt) => {
+    // to handle error
+    if (err) next(err);
+    bcrypt.hash(this.password, salt, (err, hash) => {
+      // to handle error
+      if (err) next(err);
+
+      // we assign hashed password to user's password
+      this.password = hash;
+      next();
+    });
+  });
 });
 
 // export this model
