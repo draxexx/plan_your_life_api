@@ -11,6 +11,7 @@ const createHandler = async (req, res, next) => {
     });
 
     return res.status(201).json({
+      code: res.statusCode,
       success: true,
       data: label,
       message: "The label has been created successfully.",

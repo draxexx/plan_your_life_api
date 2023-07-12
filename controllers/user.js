@@ -11,6 +11,7 @@ const createHandler = async (req, res, next) => {
     });
 
     return res.status(201).json({
+      code: res.statusCode,
       success: true,
       data: user,
       message: "The user has been created successfully.",
@@ -32,6 +33,7 @@ const getAll = async (req, res, next) => {
     const users = await User.find().populate(["tasks"]);
 
     return res.status(200).json({
+      code: res.statusCode,
       success: true,
       data: users,
       message: "Users fetched successfully.",
