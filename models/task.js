@@ -13,6 +13,11 @@ const TaskSchema = new Schema({
     required: true,
     ref: "Label", // give reference to the user model
   },
+  user: {
+    type: mongoose.Schema.ObjectId,
+    required: true,
+    ref: "User", // give reference to the user model
+  },
   subtasks: [
     {
       type: mongoose.Schema.ObjectId,

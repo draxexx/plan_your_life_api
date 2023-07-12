@@ -9,7 +9,7 @@ const createHandler = async (req, res, next) => {
     ...body,
   });
 
-  res.status(201).json({
+  return res.status(201).json({
     success: true,
     data: label,
   });

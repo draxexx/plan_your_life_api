@@ -25,7 +25,7 @@ const createHandler = async (req, res, next) => {
     subtasks: subtaskIds,
   });
 
-  res.status(201).json({
+  return res.status(201).json({
     success: true,
     data: task,
   });
@@ -35,7 +35,7 @@ const getAll = async (req, res, next) => {
   // gets all tasks
   const tasks = await Task.find().populate(["label", "subtasks"]);
 
-  res.status(200).json({
+  return res.status(200).json({
     success: true,
     data: tasks,
   });

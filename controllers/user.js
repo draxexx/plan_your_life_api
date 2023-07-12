@@ -1,27 +1,27 @@
-const Subtask = require("../models/subtask");
+const User = require("../models/user");
 
 const createHandler = async (req, res, next) => {
   // get body
   const body = req.body;
 
-  // create subtasktask
-  const subtask = await Subtask.create({
+  // create user
+  const user = await User.create({
     ...body,
   });
 
   return res.status(201).json({
     success: true,
-    data: subtask,
+    data: user,
   });
 };
 
 const getAll = async (req, res, next) => {
   // gets all tasks
-  const subtasks = await Subtask.find();
+  const users = await User.find().populate(["tasks"]);
 
   return res.status(200).json({
     success: true,
-    data: subtasks,
+    data: users,
   });
 };
 
