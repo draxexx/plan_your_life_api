@@ -8,6 +8,11 @@ const LabelSchema = new Schema({
     type: String, // type of the variable
     required: [true, "Please provide a label"], // this variable must be filled
   },
+  user: {
+    type: mongoose.Schema.ObjectId,
+    required: true,
+    ref: "User", // give reference to the user model
+  },
 });
 
 // export this model

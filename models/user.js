@@ -34,6 +34,12 @@ const UserSchema = new Schema({
       ref: "Task",
     },
   ],
+  labels: [
+    {
+      type: mongoose.Schema.ObjectId,
+      ref: "Label",
+    },
+  ],
 });
 
 UserSchema.methods.generateJwtFromUser = function () {
