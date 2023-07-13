@@ -15,6 +15,11 @@ const SubtaskSchema = new Schema({
   status: {
     type: Number,
   },
+  task: {
+    type: mongoose.Schema.ObjectId,
+    required: true,
+    ref: "Task",
+  },
 });
 
 // export this model

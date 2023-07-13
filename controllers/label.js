@@ -1,4 +1,5 @@
 const Label = require("../models/label");
+const User = require("../models/user");
 
 const createHandler = async (req, res, next) => {
   try {
@@ -9,6 +10,13 @@ const createHandler = async (req, res, next) => {
     const label = await Label.create({
       ...body,
     });
+
+    const user = await User.findById(body.user);
+
+    console.log(body.user);
+
+    user.labels.push(label);
+    await user.save();
 
     return res.status(201).json({
       code: res.statusCode,

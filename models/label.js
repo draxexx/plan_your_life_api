@@ -13,6 +13,12 @@ const LabelSchema = new Schema({
     required: true,
     ref: "User", // give reference to the user model
   },
+  tasks: [
+    {
+      type: mongoose.Schema.ObjectId,
+      ref: "Task",
+    },
+  ],
 });
 
 // export this model

@@ -105,7 +105,7 @@ const logout = async (req, res, next) => {
 const getAll = async (req, res, next) => {
   try {
     // gets all tasks
-    const users = await User.find().populate(["tasks"]);
+    const users = await User.find().populate(["tasks", "labels"]);
 
     return res.status(200).json({
       code: res.statusCode,

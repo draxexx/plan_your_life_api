@@ -1,5 +1,7 @@
 const Task = require("../models/task");
 const Subtask = require("../models/subtask");
+const User = require("../models/user");
+const Label = require("../models/label");
 
 const createHandler = async (req, res, next) => {
   try {
@@ -25,6 +27,16 @@ const createHandler = async (req, res, next) => {
       ...body,
       subtasks: subtaskIds,
     });
+
+    const user = await User.findById(body.user);
+
+    user.tasks.push(task);
+    await user.save();
+
+    const label = await Label.findById(body.label);
+
+    label.tasks.push(task);
+    await label.save();
 
     return res.status(201).json({
       code: res.statusCode,
