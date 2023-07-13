@@ -42,7 +42,11 @@ const login = async (req, res, next) => {
 
     // checks email or password is null
     if (!validateUserInput(email, password)) {
-      return next(new CustomError("Please check your inputs", 400));
+      return res.status(400).json({
+        code: res.statusCode,
+        success: false,
+        message: "Please check your inputs.",
+      });
     }
 
     // finds a user by email in the database
@@ -53,7 +57,11 @@ const login = async (req, res, next) => {
 
     // check passwords are equal
     if (!comparePassword(password, user.password)) {
-      return next(new CustomError("Please check your credentials", 400));
+      return res.status(400).json({
+        code: res.statusCode,
+        success: false,
+        message: "Please check your credentials.",
+      });
     }
 
     // if credentials are correct, then show the result
