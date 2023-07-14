@@ -109,8 +109,55 @@ const deleteHandler = async (req, res, next) => {
   }
 };
 
+const updateHandler = async (req, res, next) => {
+  try {
+    // get task id
+    const { id } = req.params;
+
+    const {
+      title,
+      label,
+      user,
+      priority,
+      description,
+      startTime,
+      endTime,
+      reminder,
+      status,
+    } = req.body;
+
+    const task = await Task.findById(id);
+
+    typeof title !== "undefined" ? (task.title = title) : "";
+    typeof label !== "undefined" ? (task.label = label) : "";
+    typeof user !== "undefined" ? (task.user = user) : "";
+    typeof priority !== "undefined" ? (task.priority = priority) : "";
+    typeof description !== "undefined" ? (task.description = description) : "";
+    typeof startTime !== "undefined" ? (task.startTime = startTime) : "";
+    typeof endTime !== "undefined" ? (task.endTime = endTime) : "";
+    typeof reminder !== "undefined" ? (task.reminder = reminder) : "";
+    typeof status !== "undefined" ? (task.status = status) : "";
+    await task.save();
+
+    return res.status(200).json({
+      success: true,
+      message: "The task has been updated successfully.",
+      data: task,
+    });
+  } catch (error) {
+    next(error);
+    return res.status(404).json({
+      code: res.statusCode,
+      success: false,
+      message: "There is a system error occurred, please try it later again.",
+      error: error.message,
+    });
+  }
+};
+
 module.exports = {
   createHandler,
   getAll,
   deleteHandler,
+  updateHandler,
 };
