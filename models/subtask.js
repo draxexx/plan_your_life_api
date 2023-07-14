@@ -20,6 +20,10 @@ const SubtaskSchema = new Schema({
     required: true,
     ref: "Task",
   },
+  createdAt: {
+    type: Date,
+    default: Date.now,
+  },
 });
 
 // export this model

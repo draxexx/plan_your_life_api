@@ -19,6 +19,10 @@ const LabelSchema = new Schema({
       ref: "Task",
     },
   ],
+  createdAt: {
+    type: Date,
+    default: Date.now,
+  },
 });
 
 // export this model

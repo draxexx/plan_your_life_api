@@ -37,6 +37,10 @@ const TaskSchema = new Schema({
   endTime: {
     type: Date,
   },
+  createdAt: {
+    type: Date,
+    default: Date.now,
+  },
   reminder: {
     type: Date,
   },
