@@ -1,23 +1,31 @@
 const User = require("../../models/user");
 
 const checkUserExist = async (req, res, next) => {
-  // gets id from the params
-  const { id } = req.params;
+  try {
+    // gets id from the params
+    const { id } = req.params;
 
-  // find user by id
-  const user = await User.findById(id);
+    const user = await User.findById(id);
 
-  // if user not exist
-  if (!user) {
+    if (!user) {
+      return res.status(400).json({
+        code: res.statusCode,
+        success: false,
+        message: "There is no such user with that id.",
+        error: err.message,
+      });
+    }
+
+    // if there is no error, next to other controller
+    next();
+  } catch (error) {
     return res.status(400).json({
       code: res.statusCode,
       success: false,
       message: "There is no such user with that id.",
+      error: error.message,
     });
   }
-
-  // if there is no error, next to other controller
-  next();
 };
 
 const checkEmailExist = async (req, res, next) => {

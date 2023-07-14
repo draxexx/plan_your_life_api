@@ -1,6 +1,6 @@
 const User = require("../models/user");
+const Task = require("../models/task");
 const { sendJwtToClient } = require("../helpers/authorization/tokenHelpers");
-const CustomError = require("../helpers/error/CustomError");
 const {
   comparePassword,
   validateUserInput,
@@ -132,9 +132,35 @@ const getAll = async (req, res, next) => {
   }
 };
 
+const getSingleUserTasks = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+
+    const tasks = await Task.find({
+      user: id,
+    }).populate(["label", "subtasks"]);
+
+    return res.status(200).json({
+      code: res.statusCode,
+      success: true,
+      data: tasks,
+      message: "User tasks fetched successfully.",
+    });
+  } catch (error) {
+    next(error);
+    return res.status(404).json({
+      code: res.statusCode,
+      success: false,
+      message: "There is a system error occurred, please try it later again.",
+      error: error.message,
+    });
+  }
+};
+
 module.exports = {
   createHandler,
   getAll,
   login,
   logout,
+  getSingleUserTasks,
 };
