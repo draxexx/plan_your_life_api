@@ -1,5 +1,6 @@
 const Label = require("../../models/label");
 const Task = require("../../models/task");
+const User = require("../../models/user");
 
 const checkLabelExistById = async (req, res, next) => {
   try {
@@ -80,8 +81,35 @@ const checkThisLabelHasTask = async (req, res, next) => {
   }
 };
 
+const checkRelatedDataExist = async (req, res, next) => {
+  try {
+    // gets id from the params
+    const { user } = req.body;
+
+    const userDB = await User.findById(user);
+
+    if (!userDB) {
+      return res.status(400).json({
+        code: res.statusCode,
+        success: false,
+        message: "There is no such user with that id.",
+      });
+    }
+    // if there is no error, next to other controller
+    next();
+  } catch (error) {
+    return res.status(400).json({
+      code: res.statusCode,
+      success: false,
+      message: "There is no such task with that id.",
+      error: error.message,
+    });
+  }
+};
+
 module.exports = {
   checkLabelExist,
   checkLabelExistById,
   checkThisLabelHasTask,
+  checkRelatedDataExist,
 };

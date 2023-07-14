@@ -9,10 +9,17 @@ const {
 } = require("../controllers/task");
 const { getAccessToRoute } = require("../middlewares/authorization/auth");
 const { checkTaskInputs } = require("../middlewares/input/inputHelpers");
-const { checkTaskExist } = require("../middlewares/database/taskErrorHelpers");
+const {
+  checkTaskExist,
+  checkRelatedDataExist,
+} = require("../middlewares/database/taskErrorHelpers");
 
 router.get("/", getAll);
-router.post("/", [getAccessToRoute, checkTaskInputs], createHandler);
+router.post(
+  "/",
+  [getAccessToRoute, checkTaskInputs, checkRelatedDataExist],
+  createHandler
+);
 router.put("/:id", [getAccessToRoute, checkTaskExist], updateHandler);
 router.delete("/:id", [getAccessToRoute, checkTaskExist], deleteHandler);
 

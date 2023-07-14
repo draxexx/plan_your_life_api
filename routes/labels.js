@@ -12,11 +12,12 @@ const {
   checkLabelExist,
   checkLabelExistById,
   checkThisLabelHasTask,
+  checkRelatedDataExist,
 } = require("../middlewares/database/labelErrorHelpers");
 
 router.post(
   "/",
-  [getAccessToRoute, checkLabelInputs, checkLabelExist],
+  [getAccessToRoute, checkLabelInputs, checkLabelExist, checkRelatedDataExist],
   createHandler
 );
 router.delete(
