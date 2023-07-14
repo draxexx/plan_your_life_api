@@ -12,7 +12,6 @@ const checkUserExist = async (req, res, next) => {
         code: res.statusCode,
         success: false,
         message: "There is no such user with that id.",
-        error: err.message,
       });
     }
 

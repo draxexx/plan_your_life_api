@@ -157,10 +157,40 @@ const getSingleUserTasks = async (req, res, next) => {
   }
 };
 
+const updateHandler = async (req, res, next) => {
+  try {
+    // get task id
+    const { id } = req.params;
+
+    const { name, email } = req.body;
+
+    const user = await User.findById(id);
+
+    typeof name !== "undefined" ? (user.name = name) : "";
+    typeof email !== "undefined" ? (user.email = email) : "";
+    await user.save();
+
+    return res.status(200).json({
+      success: true,
+      message: "The user has been updated successfully.",
+      data: user,
+    });
+  } catch (error) {
+    next(error);
+    return res.status(404).json({
+      code: res.statusCode,
+      success: false,
+      message: "There is a system error occurred, please try it later again.",
+      error: error.message,
+    });
+  }
+};
+
 module.exports = {
   createHandler,
   getAll,
   login,
   logout,
   getSingleUserTasks,
+  updateHandler,
 };

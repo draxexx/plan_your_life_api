@@ -64,9 +64,6 @@ const updateHandler = async (req, res, next) => {
 
     const { title } = req.body;
 
-    console.log(title);
-    console.log(id);
-
     const label = await Label.findById(id);
 
     typeof title !== "undefined" ? (label.title = title) : "";

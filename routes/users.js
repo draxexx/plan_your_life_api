@@ -7,6 +7,7 @@ const {
   login,
   logout,
   getSingleUserTasks,
+  updateHandler,
 } = require("../controllers/user");
 const { getAccessToRoute } = require("../middlewares/authorization/auth");
 const {
@@ -24,6 +25,7 @@ router.get(
 router.post("/", [checkUserInputs, checkEmailExist], createHandler);
 router.post("/login", login);
 router.post("/logout", getAccessToRoute, logout);
+router.put("/:id", [getAccessToRoute, checkUserExist], updateHandler);
 // router.delete("/:taskId", deleteHandler);
 
 module.exports = router;
