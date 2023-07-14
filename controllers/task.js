@@ -80,9 +80,9 @@ const getAll = async (req, res, next) => {
 const deleteHandler = async (req, res, next) => {
   try {
     // get task id
-    const { taskId } = req.params;
+    const { id } = req.params;
 
-    const task = await Task.findById(taskId);
+    const task = await Task.findById(id);
 
     if (typeof task.subtasks !== "undefined") {
       for (let index = 0; index < task.subtasks.length; index++) {
@@ -92,7 +92,7 @@ const deleteHandler = async (req, res, next) => {
       }
     }
 
-    await Task.findByIdAndRemove(taskId);
+    await Task.findByIdAndRemove(id);
 
     return res.status(200).json({
       success: true,

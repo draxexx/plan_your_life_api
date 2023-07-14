@@ -1,6 +1,5 @@
 const jwt = require("jsonwebtoken");
 
-const CustomError = require("../../helpers/error/CustomError");
 const {
   isTokenIncluded,
   getAccessTokenFromHeader,
