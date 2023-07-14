@@ -1,5 +1,8 @@
 const User = require("../models/user");
 const Task = require("../models/task");
+const Label = require("../models/label");
+const Subtask = require("../models/subtask");
+
 const { sendJwtToClient } = require("../helpers/authorization/tokenHelpers");
 const {
   comparePassword,
@@ -186,6 +189,55 @@ const updateHandler = async (req, res, next) => {
   }
 };
 
+const deleteHandler = async (req, res, next) => {
+  try {
+    // get task id
+    const { id } = req.params;
+
+    // delete user
+    await User.findByIdAndRemove(id);
+
+    // delete tasks related to the user
+    const tasks = await Task.find({
+      user: id,
+    });
+
+    for (let index = 0; index < tasks.length; index++) {
+      const element = tasks[index];
+
+      if (typeof element.subtasks !== "undefined") {
+        for (let index = 0; index < element.subtasks.length; index++) {
+          const subTask = element.subtasks[index];
+
+          await Subtask.findByIdAndRemove(subTask);
+        }
+      }
+    }
+
+    await Task.deleteMany({
+      user: id,
+    });
+
+    // delete labels related to the user
+    await Label.deleteMany({
+      user: id,
+    });
+
+    return res.status(200).json({
+      success: true,
+      message: "The user has been deleted successfully.",
+    });
+  } catch (error) {
+    next(error);
+    return res.status(404).json({
+      code: res.statusCode,
+      success: false,
+      message: "There is a system error occurred, please try it later again.",
+      error: error.message,
+    });
+  }
+};
+
 module.exports = {
   createHandler,
   getAll,
@@ -193,4 +245,5 @@ module.exports = {
   logout,
   getSingleUserTasks,
   updateHandler,
+  deleteHandler,
 };
