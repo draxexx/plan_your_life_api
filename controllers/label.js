@@ -35,6 +35,29 @@ const createHandler = async (req, res, next) => {
   }
 };
 
+const deleteHandler = async (req, res, next) => {
+  try {
+    // get task id
+    const { id } = req.params;
+
+    await Label.findByIdAndRemove(id);
+
+    return res.status(200).json({
+      success: true,
+      message: "The task has been deleted successfully.",
+    });
+  } catch (error) {
+    next(error);
+    return res.status(404).json({
+      code: res.statusCode,
+      success: false,
+      message: "There is a system error occurred, please try it later again.",
+      error: error.message,
+    });
+  }
+};
+
 module.exports = {
   createHandler,
+  deleteHandler,
 };
