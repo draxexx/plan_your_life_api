@@ -13,7 +13,7 @@ const { checkTaskExist } = require("../middlewares/database/taskErrorHelpers");
 
 router.get("/", getAll);
 router.post("/", [getAccessToRoute, checkTaskInputs], createHandler);
-router.put("/:id/title", [getAccessToRoute, checkTaskExist], updateHandler);
+router.put("/:id", [getAccessToRoute, checkTaskExist], updateHandler);
 router.delete("/:id", [getAccessToRoute, checkTaskExist], deleteHandler);
 
 module.exports = router;

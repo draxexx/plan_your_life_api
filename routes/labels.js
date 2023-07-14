@@ -1,7 +1,11 @@
 const express = require("express");
 const router = express.Router();
 
-const { createHandler, deleteHandler } = require("../controllers/label");
+const {
+  createHandler,
+  deleteHandler,
+  updateHandler,
+} = require("../controllers/label");
 const { getAccessToRoute } = require("../middlewares/authorization/auth");
 const { checkLabelInputs } = require("../middlewares/input/inputHelpers");
 const {
@@ -20,5 +24,6 @@ router.delete(
   [getAccessToRoute, checkLabelExistById, checkThisLabelHasTask],
   deleteHandler
 );
+router.put("/:id", [getAccessToRoute, checkLabelExistById], updateHandler);
 
 module.exports = router;

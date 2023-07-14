@@ -44,7 +44,38 @@ const deleteHandler = async (req, res, next) => {
 
     return res.status(200).json({
       success: true,
-      message: "The task has been deleted successfully.",
+      message: "The label has been deleted successfully.",
+    });
+  } catch (error) {
+    next(error);
+    return res.status(404).json({
+      code: res.statusCode,
+      success: false,
+      message: "There is a system error occurred, please try it later again.",
+      error: error.message,
+    });
+  }
+};
+
+const updateHandler = async (req, res, next) => {
+  try {
+    // get task id
+    const { id } = req.params;
+
+    const { title } = req.body;
+
+    console.log(title);
+    console.log(id);
+
+    const label = await Label.findById(id);
+
+    typeof title !== "undefined" ? (label.title = title) : "";
+    await label.save();
+
+    return res.status(200).json({
+      success: true,
+      message: "The label has been updated successfully.",
+      data: label,
     });
   } catch (error) {
     next(error);
@@ -60,4 +91,5 @@ const deleteHandler = async (req, res, next) => {
 module.exports = {
   createHandler,
   deleteHandler,
+  updateHandler,
 };
